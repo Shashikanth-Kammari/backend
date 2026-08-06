@@ -39,6 +39,14 @@ pipeline {
                """
             }
         }
+
+        stage('Upload to nexus') {
+            steps {
+               sh """
+                curl -v -u admin:admin123 --upload-file backend.${appVersion}.zip http://localhost:8081/repository/expense-backend/backend.${appVersion}.zip
+               """
+            }
+        }
         
     post { 
         always { 
