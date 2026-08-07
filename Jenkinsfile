@@ -68,12 +68,15 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-               scropt {
-                build job: 'deploy-backend', parameters: [string(name: 'VERSION', value: "${appVersion}")]
+               def params = [
+                    string(name: 'appVersion', value: "${appVersion}")
+                ]   
+               script {
+                build job: 'deploy-backend', parameters: params, wait: false
                }
             }
         }
-
+    }
     post { 
         always { 
             echo 'I will always say Hello again!'
@@ -86,4 +89,3 @@ pipeline {
             echo 'I will run when pipeline is failure'
         }
     }
-}
