@@ -66,6 +66,13 @@ pipeline {
                }
             }
         }
+        stage('Deploy') {
+            steps {
+               scropt {
+                build job: 'deploy-backend', parameters: [string(name: 'VERSION', value: "${appVersion}")]
+               }
+            }
+        }
 
     post { 
         always { 
