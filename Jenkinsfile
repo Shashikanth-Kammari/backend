@@ -9,6 +9,7 @@ pipeline {
     }
     evironment {
         appVersion = ''
+        nexusUrl = 'http://localhost:8081'
     }
     
     stages {
@@ -47,7 +48,23 @@ pipeline {
                """
             }
         }
-        
+        stage('Nexus artifact uploader') {
+            steps {
+               script {
+                   nexusArtifactUploader(
+                        NexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: '${nexusUrl}',
+                        groupId: 'com.expense',
+                        version: "${appVersion}",
+                        repository: 'backend',
+                        credentialsId: 'nexus-auth',
+                        artifacts: [
+                    )
+               }
+            }
+        }
+
     post { 
         always { 
             echo 'I will always say Hello again!'
