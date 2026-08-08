@@ -11,6 +11,9 @@ pipeline {
         appVersion = ''
         nexusUrl = 'http://localhost:8081'
     }
+    parameters {
+        booleanParam(name: 'deploy', defaultValue: false, description: 'deploy the application to the environment')
+    }
     
     stages {
         stage('read the version') {
@@ -79,6 +82,9 @@ pipeline {
             }
         }
         stage('Deploy') {
+        when {
+            expression { params.deploy }
+            }
             steps {
                 script {
                     def params = [
