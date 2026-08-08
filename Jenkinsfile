@@ -40,6 +40,18 @@ pipeline {
                """
             }
         }
+        stage('sonar scan') {
+            environment {
+                scannerHome = tool 'sonar-6.0' //scannar cli
+            }
+            steps{
+                script {
+                    withSonarQubeEnv('sonar-6.0') {  
+                        sh "${scannerHome}/bin/sonar-scanner 
+                        }
+                    }
+            }
+        }
 
         stage('Upload to nexus') {
             steps {
