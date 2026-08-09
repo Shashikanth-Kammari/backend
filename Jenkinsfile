@@ -66,7 +66,7 @@ pipeline {
         stage('Upload to nexus') {
             steps {
                sh """
-                curl  --upload-file backend.${appVersion}.zip http://localhost:8081/repository/expense-backend/backend.${appVersion}.zip
+                curl --upload-file backend.${appVersion}.zip http://localhost:8081/repository/expense-backend/backend.${appVersion}.zip
                """
             }
         }
