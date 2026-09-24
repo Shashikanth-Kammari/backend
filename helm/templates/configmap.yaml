@@ -5,4 +5,4 @@ metadata:
   namespace: expense
 data:
   #DB_HOST: mysql # mysql component service name
-  DB_HOST: {{ .Values.configmap.HOST }} # mysql component service name
+  DB_HOST: db.dev.daws78s.online # mysql component service name

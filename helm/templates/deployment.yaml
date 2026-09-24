@@ -23,34 +23,10 @@ spec:
         project: expense
         tier: app
     spec:
-      initContainers:
-      - name: init-myservice
-        image: busybox:{{ .Values.deployment.imageVersion }}
-        command: ['sh', '-c', "until nslookup db-dev.daws78s.online; do echo waiting for myservice; sleep 2; done"]
       containers:
       - name: backend
-        image: joindevops/backend:{{ .Values.deployment.imageVersion }}
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "128Mi"
-          limits:
-            cpu: "150m"
-            memory: "256Mi"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          failureThreshold: 2
-          periodSeconds: 5
-          initialDelaySeconds: 30
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          failureThreshold: 2
-          periodSeconds: 5
-          initialDelaySeconds: 30
+        imagePullPolicy: always
+        image: <yourAWSaccountId>.dkr.ecr.us-east-1.amazonaws.com/expense-backend:{{ .Values.deployment.imageVersion }}
         envFrom:
         - configMapRef:
             name: backend
