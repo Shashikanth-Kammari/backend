@@ -10,6 +10,8 @@ pipeline {
     evironment {
         appVersion = ''
         nexusUrl = 'http://localhost:8081'
+        region = "us-east-1"
+        account_id= "aws-account-id-yours"
     }
     parameters {
         booleanParam(name: 'deploy', defaultValue: false, description: 'deploy the application to the environment')
@@ -38,6 +40,15 @@ pipeline {
         stage('Docker build') {
             steps {
                sh """
+                aws ecr get-login-password --region ${region} | docker login 
+                --username AWS --password-stdin ${account_id}.dkr.ecr.${region}.amazonaws.com
+                
+                docker build -t ${account_id}.dkr.ecr.${region}.amazonaws.com/
+                expense-backend:${appVersion} .
+
+                docker push ${account_id}.dkr.ecr.${region}.amazonaws.com/ 
+                expense-backend:${appVersion}
+                
                 zip -q -r backend.${appVersion}.zip * -x Jenkinsfile -x backend.${appVersion}.zip
                 ls -ltr              
                """
