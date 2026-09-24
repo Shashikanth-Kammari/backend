@@ -7,7 +7,7 @@ pipeline {
         disableConcurrentBuilds()
         ansiColor('xterm')
     }
-    evironment {
+    environment {
         appVersion = ''
         nexusUrl = 'http://localhost:8081'
         region = "us-east-1"
@@ -58,6 +58,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
+                    aws eks update-kubeconfig --region ${region} --name expense-dev
                     cd helm
                     sed -i 's/IMAGE_VERSION/${appVersion}/g' values.yaml
                     helm install backend .
