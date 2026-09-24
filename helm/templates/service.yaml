@@ -10,5 +10,5 @@ spec:
     tier: app
   ports:
   - protocol: TCP
-    port: {{ .Values.service.port }} #service-port
-    targetPort: {{ .Values.service.port }} #target-port
+    port: 8080 #service-port
+    targetPort: 8080 #target-port
