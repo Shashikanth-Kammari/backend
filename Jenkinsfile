@@ -42,7 +42,7 @@ pipeline {
                sh """
                 aws ecr get-login-password --region ${region} | docker login 
                 --username AWS --password-stdin ${account_id}.dkr.ecr.${region}.amazonaws.com
-                
+
                 docker build -t ${account_id}.dkr.ecr.${region}.amazonaws.com/
                 expense-backend:${appVersion} .
 
@@ -52,6 +52,16 @@ pipeline {
                 zip -q -r backend.${appVersion}.zip * -x Jenkinsfile -x backend.${appVersion}.zip
                 ls -ltr              
                """
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh """
+                    cd helm
+                    sed -i 's/IMAGE_VERSION/${appVersion}/g' values.yaml
+                    helm install backend .
+                """
             }
         }
         stage('sonar scan') {
