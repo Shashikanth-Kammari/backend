@@ -9,7 +9,7 @@ pipeline {
     }
     environment {
         appVersion = ''
-        nexusUrl = 'http://localhost:8081'
+        nexusUrl = 'http://shashikanth.online:8081'
         region = "us-east-1"
         account_id= "give-your-aws-account-id"
     }
