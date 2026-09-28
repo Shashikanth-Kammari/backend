@@ -8,5 +8,6 @@ def configMap = [
     project: "expense"
 
 ]
-
+echo "environment: $env"
 pipeline-Decission.decidepipeline(configMap)
+
