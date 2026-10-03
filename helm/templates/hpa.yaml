@@ -9,7 +9,7 @@ spec:
     kind: Deployment
     name: backend
   minReplicas: {{ .Values.hpa.minReplicas }}
-  maxReplicas: 10
+  maxReplicas: {{ .Values.hpa.maxReplicas }}
   metrics:
   - type: Resource
     resource:
