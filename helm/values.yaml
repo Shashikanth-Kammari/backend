@@ -1,6 +1,6 @@
 deployment:
   imageVersion: IMAGE_VERSION # this is called placeholder
-  replicas: 3
+  replicas: 2
 hpa:
   enabled: true
   minReplicas: 2
